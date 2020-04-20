@@ -5,6 +5,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.service.PaymentService;
+import javafx.beans.DefaultProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,17 @@ public class CircleBreakerController {
 
     @Resource
     private RestTemplate restTemplate;
+
+    @GetMapping("/consumer/payment/nacos/{id}")
+    @SentinelResource(value="test",fallback = "globleEx")
+    public String test(@PathVariable("id") Long id){
+
+        if (id==999){
+          int id1 = 10/0;
+          //throw new RuntimeException("发生异常");
+        }
+        return paymentService.test(id);
+    }
 
     @RequestMapping("/consumer/fallback/{id}")
 //    @SentinelResource(value = "fallback") //没有配置
@@ -51,6 +63,11 @@ public class CircleBreakerController {
         Payment payment = new Payment(id, null);
         return new CommonResult<>(445, "blockHandler-sentinel 限流，无此流水号：blockException" + exception.getMessage(), payment);
     }
+
+    public String globleEx(Long id){
+        return "出错啦";
+    }
+
 
     // --------------- open feign---------
 

@@ -13,5 +13,8 @@ public interface PaymentService {
 
     @GetMapping("/paymentSQL/{id}")
     public CommonResult<Payment> paymentSQL(@PathVariable("id") Long id);
+
+    @GetMapping("/payment/nacos/{id}")
+    public String test(@PathVariable("id") Long id);
 }
 

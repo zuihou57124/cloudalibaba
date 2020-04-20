@@ -13,4 +13,9 @@ public class PaymentFallbackService implements PaymentService{
     public CommonResult<Payment> paymentSQL(Long id) {
         return new CommonResult<>(444,"服务降级返回，------------PaymentFallbackService",new Payment(id,"errorSerial"));
     }
+
+    @Override
+    public String test(Long id) {
+        return "服务降级洛";
+    }
 }
