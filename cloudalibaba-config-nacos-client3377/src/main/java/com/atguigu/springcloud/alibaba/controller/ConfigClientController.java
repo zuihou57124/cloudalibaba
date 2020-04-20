@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope   //SpringCloud原生注解 支持Nacos的动态刷新功能
 public class ConfigClientController {
 
-    @Value("${config.info}")
+    @Value("${jdbc.username}")
     private String configInfo;
 
-    @GetMapping("/config/info")
+    @GetMapping("/config")
     public String getConfigInfo(){
         return configInfo;
     }
